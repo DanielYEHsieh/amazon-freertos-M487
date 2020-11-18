@@ -63,7 +63,7 @@
 #define configUSE_TRACE_FACILITY                     1
 #define configUSE_16_BIT_TICKS                       0
 #define configIDLE_SHOULD_YIELD                      1
-#define configUSE_MUTEXES  				             1
+#define configUSE_MUTEXES                            1
 #define configUSE_TASK_NOTIFICATIONS                 1
 #define configQUEUE_REGISTRY_SIZE                    8
 #if defined(__ICCARM__)

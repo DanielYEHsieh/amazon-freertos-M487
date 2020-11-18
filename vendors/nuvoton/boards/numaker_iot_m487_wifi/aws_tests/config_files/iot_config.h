@@ -52,4 +52,15 @@
 /* Include the common configuration file for FreeRTOS. */
 #include "iot_config_common.h"
 
+#if defined(MBEDTLS_SSL_MAX_CONTENT_LEN)                                                                                                                                 
+#undef MBEDTLS_SSL_MAX_CONTENT_LEN                                                                                                                                       
+#endif                                                                                                                                                                   
+#define MBEDTLS_SSL_MAX_CONTENT_LEN             ( 1024 ) /**< Maximum fragment length in bytes, determines the size of each of the two internal I/O buffers. */      
+                 
+#define MAX_TLS_FRAME_SZIE 3000
+#define SOCKETS_RX_BEST_EFFORT 	1
+#define MAX_SEND_FRAME_SZIE 1450
+#define RX_BUF_SIZE         4096
+#define MAX_BUFFER_INUSE 2
+
 #endif /* ifndef IOT_CONFIG_H_ */

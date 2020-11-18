@@ -55,7 +55,7 @@
     /* coverity[misra_c_2012_rule_8_6_violation] */
     uint8_t CellularSocketPdnContextId = testCELLULAR_PDN_CONTEXT_ID;
 
-    #define CELLULAR_SIM_CARD_WAIT_INTERVAL_MS    ( 500UL )
+    #define CELLULAR_SIM_CARD_WAIT_INTERVAL_MS    ( 5000UL )
     #define CELLULAR_SIM_CARD_WAIT_TIMEOUT_MS     ( 20000UL )
 
     #define CELLULAR_MAX_SIM_RETRY                ( 5U )

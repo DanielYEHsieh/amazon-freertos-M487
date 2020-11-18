@@ -103,7 +103,7 @@
 /**
  * @brief Time in milliseconds after which the TCP send operation should timeout.
  */
-#define mqttconfigTCP_SEND_TIMEOUT_MS    ( 2000 )
+#define mqttconfigTCP_SEND_TIMEOUT_MS    ( 200000 )
 
 /**
  * @brief Length of the buffer used to receive data.

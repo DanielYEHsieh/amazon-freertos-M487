@@ -887,7 +887,7 @@ static void _pktioReadThread( void * pUserData )
                                           pdTRUE,
                                           pdFALSE,
                                           portMAX_DELAY );
-            configPRINTF(("_pktioReadThread uxBits %d\n", uxBits));
+            //configPRINTF(("_pktioReadThread uxBits %d\n", uxBits));
             if( ( uxBits & ( EventBits_t ) PKTIO_EVT_MASK_ABORT ) != 0U )
             {
                 IotLogDebug( "Abort received, cleaning up!" );
@@ -898,7 +898,7 @@ static void _pktioReadThread( void * pUserData )
             {
                 if( ( uxBits & ( EventBits_t ) PKTIO_EVT_MASK_RX_DATA ) != 0U )
                 {
-                    configPRINTF(("_handleRxDataEvent PKTIO_EVT_MASK_RX_DATA\n"));
+                    //configPRINTF(("_handleRxDataEvent PKTIO_EVT_MASK_RX_DATA\n"));
                     _handleRxDataEvent( pContext, &pAtResp );
                 }
             }

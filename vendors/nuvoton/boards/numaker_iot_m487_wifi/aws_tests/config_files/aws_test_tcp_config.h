@@ -59,13 +59,13 @@
  *  @brief Indicates how long  receive needs to wait for data before Timeout happens.
  *
  */
-#define         integrationtestportableRECEIVE_TIMEOUT             10000
+#define         integrationtestportableRECEIVE_TIMEOUT             1000000
 
 /**
  * @brief Indicates how long  send needs to wait before Timeout happens.
  *
  */
-#define         integrationtestportableSEND_TIMEOUT                10000
+#define         integrationtestportableSEND_TIMEOUT                1000000
 
 /**
  * @brief The stack size of the tasks created in all TCP echo multi-task tests.

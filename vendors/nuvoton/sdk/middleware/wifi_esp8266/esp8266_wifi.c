@@ -20,7 +20,7 @@
 ESP_WIFI_IPD_t xWifiIpd[wificonfigMAX_SOCKETS];
 
 /* Uart rx buffer control */
-#define RX_BUF_SIZE         4096
+#define RX_BUF_SIZE         100
 #define RX_BUF_RESET()      (rx_buf_ridx = rx_buf_widx = 0)
 
 static uint8_t rx_buf[RX_BUF_SIZE];

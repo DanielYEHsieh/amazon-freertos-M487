@@ -1601,7 +1601,7 @@ int32_t SOCKETS_Send( Socket_t xSocket,
             retSentLength = ( int32_t ) bytesSent;
         }
     }
-    vTaskDelay(2500);
+    vTaskDelay(SEND_FRAME_DELAY);
     configPRINTF(("SOCKETS_Send xDataLength %d retSentLength %d\n", xDataLength, retSentLength ));
     IotLogDebug( "(Network connection %p) Sent %d bytes.", pCellularSocketContext, retSentLength );
     return retSentLength;

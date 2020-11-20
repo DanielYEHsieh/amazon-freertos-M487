@@ -72,4 +72,12 @@
  */
 #define         tcptestTCP_ECHO_TASKS_STACK_SIZE                   ( configMINIMAL_STACK_SIZE * 8 )
 
+#define tcptestECHO_TEST_SYNC_TIMEOUT 800000
+
+#define tcptestECHO_TEST_RXTX_TIMEOUT 2000000
+
+#define tcptest_FRAME_SIZE 1500
+
+#define ipconfigTCP_MSS 255
+
 #endif /*AWS_INTEGRATION_TEST_TCP_CONFIG_H */

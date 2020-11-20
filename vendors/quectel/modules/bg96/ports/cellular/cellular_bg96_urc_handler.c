@@ -635,6 +635,7 @@ static void _Cellular_ProcessSocketurc( CellularContext_t * pContext,
              * convert atcore status to pktstatus. */
             if( strstr( pToken, "recv" ) != NULL )
             {
+                configPRINTF(("_Cellular_ProcessSocketurc recv\n"));
                 pktStatus = _parseSocketUrcRecv( pContext, pUrcStr );
             }
             else if( strcmp( pToken, "closed" ) == 0 )

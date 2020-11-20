@@ -65,7 +65,7 @@
 #define COMM_EVT_MASK_RX_TIMEOUT    ( 0x0002U )
 
 //#define DEFAULT_WAIT_INTERVAL       ( 20UL )
-#define DEFAULT_RECV_WAIT_INTERVAL  ( 5UL )
+#define DEFAULT_RECV_WAIT_INTERVAL  ( 50UL )
 //#define DEFAULT_RECV_TIMEOUT        ( 1000UL )
 
 #define TICKS_TO_MS( xTicks )       ( ( ( xTicks ) * 1000U ) / ( ( uint32_t ) configTICK_RATE_HZ ) )
@@ -124,16 +124,16 @@ static CellularCommInterfaceContext _iotCommIntfCtx = { 0 };
 /*-----------------------------------------------------------*/
 
 /* Uart rx buffer control */
-#define RX_BUF_SIZE         1600
+
 #define RX_BUF_RESET()      (rx_buf_ridx = rx_buf_widx = 0)
 
-static uint8_t rx_buf[RX_BUF_SIZE];
-static uint16_t rx_buf_ridx, rx_buf_widx;
+static uint8_t rx_buf[RX_BUF_SIZE_NUV_COMM_IF];
+uint16_t rx_buf_ridx, rx_buf_widx;
 
 void RX_BUF_PUSH( uint8_t d )
 {
     rx_buf[rx_buf_widx++] = d;
-    if( rx_buf_widx == RX_BUF_SIZE )
+    if( rx_buf_widx == RX_BUF_SIZE_NUV_COMM_IF )
     {
         rx_buf_widx = 0;
     }
@@ -143,7 +143,7 @@ uint8_t RX_BUF_POP( void )
 {
     uint8_t d = rx_buf[rx_buf_ridx++];
 
-    if( rx_buf_ridx == RX_BUF_SIZE )
+    if( rx_buf_ridx == RX_BUF_SIZE_NUV_COMM_IF )
     {
         rx_buf_ridx = 0;
     }
@@ -153,7 +153,7 @@ uint8_t RX_BUF_POP( void )
 
 uint8_t RX_BUF_FULL( void )
 {
-    if( ( rx_buf_widx == ( RX_BUF_SIZE - 1 ) ) && ( rx_buf_ridx == 0 ) )
+    if( ( rx_buf_widx == ( RX_BUF_SIZE_NUV_COMM_IF - 1 ) ) && ( rx_buf_ridx == 0 ) )
     {
         return 1;
     }
@@ -176,7 +176,7 @@ uint16_t RX_BUF_COUNT( void )
     }
     else
     {
-        return ( RX_BUF_SIZE + rx_buf_widx - rx_buf_ridx );
+        return ( RX_BUF_SIZE_NUV_COMM_IF + rx_buf_widx - rx_buf_ridx );
     }
 }
 

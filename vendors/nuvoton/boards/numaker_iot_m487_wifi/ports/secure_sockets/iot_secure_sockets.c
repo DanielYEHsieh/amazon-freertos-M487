@@ -150,6 +150,7 @@ typedef struct xSOCKET
 uint8_t currentBufferInUse = 0;
 static uint8_t rx_buf[ MAX_BUFFER_INUSE ][RX_BUF_SIZE] = { 0 };
 static uint8_t tmp_rx_buf[RX_BUF_SIZE] = { 0 };
+extern uint16_t rx_buf_ridx, rx_buf_widx;
 
 /*-----------------------------------------------------------*/
 
@@ -243,6 +244,18 @@ static uint16_t prvGetReceiveBufferCount( _cellularSecureSocket_t * pCellularSoc
     }
 }
 
+
+uint16_t EXTERN_RX_BUF_COUNT( void )
+{
+    if( rx_buf_widx >= rx_buf_ridx )
+    {
+        return ( rx_buf_widx - rx_buf_ridx );
+    }
+    else
+    {
+        return ( RX_BUF_SIZE + rx_buf_widx - rx_buf_ridx );
+    }
+}
 
 
 /*-----------------------------------------------------------*/
@@ -415,6 +428,7 @@ static BaseType_t prvNetworkRecvCellular( const _cellularSecureSocket_t * pCellu
     }
     else
     {
+        configPRINTF(( "prvNetworkRecv failed %d\n", socketStatus));
         IotLogError( "prvNetworkRecv failed %d", socketStatus );
         retRecvLength = SOCKETS_SOCKET_ERROR;
     }
@@ -1500,7 +1514,7 @@ int32_t SOCKETS_Recv( Socket_t xSocket,
             retRecvLength = ( int32_t ) bytesRecv;
         }
     }
-
+    configPRINTF(("SOCKETS_Recv xBufLen %d  retRLen %d, eRxBufCnt %d......\n", xBufferLength, retRecvLength, EXTERN_RX_BUF_COUNT() ));
     IotLogDebug( "(Network connection %p) Recv %d bytes.", pCellularSocketContext, retRecvLength );
     return retRecvLength;
 }
@@ -1587,7 +1601,8 @@ int32_t SOCKETS_Send( Socket_t xSocket,
             retSentLength = ( int32_t ) bytesSent;
         }
     }
-    vTaskDelay(10);
+    vTaskDelay(2500);
+    configPRINTF(("SOCKETS_Send xDataLength %d retSentLength %d\n", xDataLength, retSentLength ));
     IotLogDebug( "(Network connection %p) Sent %d bytes.", pCellularSocketContext, retSentLength );
     return retSentLength;
 }

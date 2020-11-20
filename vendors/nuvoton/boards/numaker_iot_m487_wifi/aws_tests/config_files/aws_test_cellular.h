@@ -60,7 +60,7 @@
  * 4 LTE Cat M1
  * 5 LTE Cat NB1
  */
-#define testCELLULAR_EDRX_RAT                                  ( 5 )
+#define testCELLULAR_EDRX_RAT                                  ( 4 )
 
 
 #endif /* ifndef __AWS_TEST_CELLULAR_H__ */

@@ -151,7 +151,7 @@ uint8_t currentBufferInUse = 0;
 static uint8_t rx_buf[ MAX_BUFFER_INUSE ][RX_BUF_SIZE] = { 0 };
 static uint8_t tmp_rx_buf[RX_BUF_SIZE] = { 0 };
 extern uint16_t rx_buf_ridx, rx_buf_widx;
-
+extern uint32_t _Cellular_ProcessSocketurc_recvCounter;
 /*-----------------------------------------------------------*/
 
 static BaseType_t prvNetworkSend( void * ctx,
@@ -1514,6 +1514,12 @@ int32_t SOCKETS_Recv( Socket_t xSocket,
             retRecvLength = ( int32_t ) bytesRecv;
         }
     }
+
+    if( retRecvLength > 0 )
+    {
+        _Cellular_ProcessSocketurc_recvCounter = 0;
+    }
+
     configPRINTF(("SOCKETS_Recv xBufLen %d  retRLen %d, eRxBufCnt %d......\n", xBufferLength, retRecvLength, EXTERN_RX_BUF_COUNT() ));
     IotLogDebug( "(Network connection %p) Recv %d bytes.", pCellularSocketContext, retRecvLength );
     return retRecvLength;
@@ -1562,15 +1568,15 @@ int32_t SOCKETS_Send( Socket_t xSocket,
 
     if( retSentLength == SOCKETS_ERROR_NONE )
     {
+        if( xDataLength >= MAX_TLS_FRAME_SZIE )
+        {
+            xDataLength = MAX_TLS_FRAME_SZIE;
+        }
+        else{
+            /*empty comment*/
+        }
         if( tlsFlag != 0U )
         {
-            if( xDataLength >= MAX_TLS_FRAME_SZIE )
-            {
-                xDataLength = MAX_TLS_FRAME_SZIE;
-            }
-            else{
-                /*empty comment*/
-            }
             bytesSent = TLS_Send( pCellularSocketContext->pvTLSContext, pvBuffer, xDataLength );
         }
         else
@@ -1601,7 +1607,11 @@ int32_t SOCKETS_Send( Socket_t xSocket,
             retSentLength = ( int32_t ) bytesSent;
         }
     }
-    vTaskDelay(SEND_FRAME_DELAY);
+    if( _Cellular_ProcessSocketurc_recvCounter > 0 )
+    {
+        vTaskDelay(SEND_FRAME_DELAY);
+        _Cellular_ProcessSocketurc_recvCounter = 0;
+    }
     configPRINTF(("SOCKETS_Send xDataLength %d retSentLength %d\n", xDataLength, retSentLength ));
     IotLogDebug( "(Network connection %p) Sent %d bytes.", pCellularSocketContext, retSentLength );
     return retSentLength;

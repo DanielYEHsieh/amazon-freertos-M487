@@ -74,7 +74,7 @@
 
 #define tcptestECHO_TEST_SYNC_TIMEOUT 800000
 
-#define tcptestECHO_TEST_RXTX_TIMEOUT 20000
+#define tcptestECHO_TEST_RXTX_TIMEOUT 200000
 
 #define tcptest_FRAME_SIZE 1500
 

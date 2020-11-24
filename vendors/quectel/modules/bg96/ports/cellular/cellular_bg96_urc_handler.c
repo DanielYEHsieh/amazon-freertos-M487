@@ -593,7 +593,7 @@ static CellularPktStatus_t _parseSocketUrcDns( const CellularContext_t * pContex
 }
 
 /*-----------------------------------------------------------*/
-
+uint32_t _Cellular_ProcessSocketurc_recvCounter = 0;
 /* Cellular common prototype. */
 /* coverity[misra_c_2012_rule_8_13_violation] */
 static void _Cellular_ProcessSocketurc( CellularContext_t * pContext,
@@ -636,6 +636,7 @@ static void _Cellular_ProcessSocketurc( CellularContext_t * pContext,
             if( strstr( pToken, "recv" ) != NULL )
             {
                 configPRINTF(("_Cellular_ProcessSocketurc recv\n"));
+                _Cellular_ProcessSocketurc_recvCounter++;
                 pktStatus = _parseSocketUrcRecv( pContext, pUrcStr );
             }
             else if( strcmp( pToken, "closed" ) == 0 )
